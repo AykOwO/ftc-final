@@ -1,0 +1,48 @@
+# Poção da Duplicação - Duplica uma sequência de 'a's e 'b's, Esta poção pega uma sequência de ingredientes e a duplica, 
+# criando uma cópia exata ao lado. Por exemplo, ab se torna abab. Isso mostra o poder da máquina de escrever na fita.
+
+Q: q_scan q_carry_a q_carry_b q_return q_cleanup F erro
+I: q_scan
+F: F
+B: _
+
+# q_scan: Procura o primeiro 'a' ou 'b' da esquerda para a direita.
+q_scan a -> q_carry_a X R
+q_scan b -> q_carry_b Y R
+# Se encontrar uma marca (X ou Y), apenas a pula para a direita.
+q_scan X -> q_scan X R
+q_scan Y -> q_scan Y R
+# Se encontrar um '_' depois de pular as marcas, significa que todos os ingredientes originais foram copiados. Inicia a limpeza.
+q_scan _ -> q_cleanup _ L
+
+# q_carry_a: Lembra que pegou um 'a'. Move até o final da fita.
+q_carry_a a -> q_carry_a a R
+q_carry_a b -> q_carry_a b R
+q_carry_a X -> q_carry_a X R
+q_carry_a Y -> q_carry_a Y R
+# Quando encontra o final (_), escreve a cópia 'a' e começa a voltar.
+q_carry_a _ -> q_return a L
+
+# q_carry_b: Lembra que pegou um 'b'. Move até o final da fita.
+q_carry_b a -> q_carry_b a R
+q_carry_b b -> q_carry_b b R
+q_carry_b X -> q_carry_b X R
+q_carry_b Y -> q_carry_b Y R
+# Quando encontra o final (_), escreve a cópia 'b' e começa a voltar.
+q_carry_b _ -> q_return b L
+
+# q_return: Volta tudo para a esquerda até encontrar o início da fita.
+q_return a -> q_return a L
+q_return b -> q_return b L
+q_return X -> q_return X L
+q_return Y -> q_return Y L
+# Ao chegar no início (_), move para a direita e volta a escanear.
+q_return _ -> q_scan _ R
+
+# q_cleanup: Volta da direita para a esquerda, restaurando as marcas 'X' e 'Y'.
+q_cleanup a -> q_cleanup a L
+q_cleanup b -> q_cleanup b L
+q_cleanup X -> q_cleanup a L
+q_cleanup Y -> q_cleanup b L
+# Quando encontrar o início (_), a poção está pronta e a máquina para no estado Final.
+q_cleanup _ -> F _ R

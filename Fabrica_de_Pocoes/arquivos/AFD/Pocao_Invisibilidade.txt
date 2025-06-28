@@ -1,0 +1,12 @@
+Q: I neblina_inicial sombra_ativada nevoa_final erro F
+I: I
+F: F
+I -> neblina_inicial | n
+I -> erro | l s v
+neblina_inicial -> sombra_ativada | s
+neblina_inicial -> erro | n l v
+sombra_ativada -> nevoa_final | v
+sombra_ativada -> erro | n l s
+nevoa_final -> F | n
+nevoa_final -> erro | l s v
+F -> erro | n l s v

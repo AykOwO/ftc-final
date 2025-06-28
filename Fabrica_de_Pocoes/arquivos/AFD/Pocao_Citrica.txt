@@ -1,0 +1,7 @@
+Q: I agua agua_com_limao suco erro F
+I: I
+F: F
+I -> agua | a 
+agua -> agua_com_limao | l
+agua_com_limao -> suco | g
+suco -> F | l

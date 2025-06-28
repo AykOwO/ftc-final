@@ -1,0 +1,9 @@
+# Poção Tradutora
+# Traduz uma sequência de runas antigas (a, b, c) para um encantamento moderno (X, Y, Z).
+# a -> X, b -> Y, c -> Z
+Q: q0
+I: q0
+# Transições: estado_atual simbolo_lido -> proximo_estado simbolo_escrito
+q0 a -> q0 X
+q0 b -> q0 Y
+q0 c -> q0 Z
